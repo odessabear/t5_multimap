@@ -33,23 +33,38 @@ public class MultiMapImpl<K,V> extends HashMap<K, V> implements MultiMap<K,V>{
         return null;
     }
 
+//    @Override
+//    public String toString() {
+//        String string = "";
+//
+//
+//        for ( K key : multiMap.keySet()){
+//            string = string + key + " = [";
+//
+//            StringJoiner j = new StringJoiner(",");
+//            for(V value : multiMap.get(key)) {
+//                j.add(value.toString());
+//            }
+//
+//            string = string + j.toString();
+//            string = string + "]";
+//        }
+//        return string;
+//    }
+
     @Override
     public String toString() {
-        String string = "";
-
-
+        StringBuilder buf = new StringBuilder();
         for ( K key : multiMap.keySet()){
-            string = string + key + " = [";
-
+            buf.append(key).append(" = [");
             StringJoiner j = new StringJoiner(",");
             for(V value : multiMap.get(key)) {
                 j.add(value.toString());
             }
-
-            string = string + j.toString();
-            string = string + "]";
+            buf.append(j.toString());
+            buf.append("]").append("\n");
         }
-        return string;
+        return buf.toString();
     }
 
     private String getLastSymbol(int i, int size) {
@@ -59,4 +74,22 @@ public class MultiMapImpl<K,V> extends HashMap<K, V> implements MultiMap<K,V>{
             return ",";
         }
     }
+
+//    public V getLast() {
+//
+//        Iterator mapIterator = multiMap.entrySet().iterator();
+//        Entry<K, List<V>> element = null;
+//        while (mapIterator.hasNext()) {
+//            elemant = (Entry<K, List<V>>) mapIterator.next();
+//        }
+//
+//        return (V) elemant.getValue();
+//    }
+
+
+    public V get(Object key){
+        int lastIndex = multiMap.get(key).size() - 1;
+        return multiMap.get(key).get(lastIndex);
+    }
+
 }
